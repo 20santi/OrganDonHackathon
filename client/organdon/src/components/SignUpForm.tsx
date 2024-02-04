@@ -24,10 +24,8 @@ import {
 import { apiConnector } from "@/services/apiconnector";
 import { authEndpoints } from "@/services/apis";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setUser } from "@/utils/slices/profileSlices";
-import { RootState } from "@/utils/store";
-import { useEffect } from "react";
 import wait from "@/utils/wait";
 import { toast } from "sonner";
 import { ReloadIcon } from "@radix-ui/react-icons";
@@ -41,24 +39,23 @@ export function SignUpForm() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.profile);
 
   async function onSubmit(values: z.infer<typeof SignUpSchema>) {
     setIsLoading(true);
-    const formData = {
-      ...values,
-      lat: localStorage.getItem("Lat"),
-      lng: localStorage.getItem("Long"),
-    };
-    console.log("form data: ", formData);
-    const response = await apiConnector(
-      "POST",
-      authEndpoints.SIGNUP_API,
-      formData
-    );
-    console.log("Response after signup: ", response);
 
     try {
+      const formData = {
+        ...values,
+        lat: localStorage.getItem("Lat"),
+        lng: localStorage.getItem("Long"),
+      };
+      console.log("form data: ", formData);
+      const response = await apiConnector(
+        "POST",
+        authEndpoints.SIGNUP_API,
+        formData
+      );
+      console.log("Response after signup: ", response);
       if (response.status == 200) {
         localStorage.setItem(
           "OrganDonation_User",
@@ -80,6 +77,7 @@ export function SignUpForm() {
     } catch (error) {
       console.log("Error during signup: ", error);
     }
+    setIsLoading(false);
   }
 
   return (

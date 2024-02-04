@@ -5,6 +5,7 @@ const router = express.Router()
 router.post(
   '/register',
   async (req: express.Request, res: express.Response, next: NextFunction) => {
+    console.log("Inside router------------------");
     try {
       const accountService = new AccountService()
       const response = await accountService.registerAccount(req.body)
