@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { LoginForm } from "@/components/LoginForm";
+import { LoginForm } from "../components/LoginForm";
 import AuthNav from "@/components/authNav";
 import { Toaster } from "@/components/ui/sonner";
+
+
 export default function Login() {
   const navigate = useNavigate();
 
